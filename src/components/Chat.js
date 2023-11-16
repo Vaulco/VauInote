@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy } from 'firebase/firestore'
 import { auth, db } from "../firebase-config";
-import '../styles/chat.css'
+import '../App.css'
 
 export const Chat = (props) => {
     const {room} = props
@@ -22,7 +22,7 @@ export const Chat = (props) => {
         });
 
         return () => unsubscribe();
-    });
+    }, []);
 
     const handlSubmit = async (e) => {
         e.preventDefault();
@@ -40,16 +40,27 @@ export const Chat = (props) => {
     return  (
         <div className="chat-app"> 
             <div className="header"> 
-                <h1>Welcome to: {room}</h1>
+                <h4>{room}</h4>
             </div>
             <div className="messages"> 
                 {messages.map((message) => (
                     <div key={message.id} className="message">
-                        <span className="user">{message.user}:</span> {message.text}
-                    </div>))}</div>
+                        <span className="user">{message.user}&nbsp;</span><span className="date"> {message.createdAt && message.createdAt.toDate() && (
+            <>
+                {message.createdAt.toDate().toLocaleDateString('en-US')} {' '}
+                {message.createdAt.toDate().toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+        })}{' '}
+            </>
+        )}<br></br></span>{message.text}
+                    </div>
+                ))}
+            </div>
             <form onSubmit={handlSubmit}  className="new-message-form">
-                <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input" placeholder="Message #general"/>
-                <button type="submit" className="send-button"> Send </button>
+                <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input" placeholder={"Message"+" "+(room)}/>
+                <button type="submit" className="send-button bx bxs-send"></button>
             </form> 
         </div>
     )

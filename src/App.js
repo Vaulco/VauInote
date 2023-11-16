@@ -34,11 +34,8 @@ const App = () => {
         <Chat room={room}/>
       ) : (
         <div className='room'>
-          <label>Enter Room Name:</label> 
-          <input ref={roomInputRef}/>
-          <button onClick={() => setRoom(roomInputRef.current.value)}> 
-            Enter Chat
-          </button>
+          <input className='room-input' ref={roomInputRef} placeholder='search rooms'/>
+          <i onClick={() => setRoom(roomInputRef.current.value)} className='bx bx-search'></i>
         </div>
       )} 
       

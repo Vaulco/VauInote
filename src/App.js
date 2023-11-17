@@ -33,15 +33,12 @@ const App = () => {
       {room ? (
         <Chat room={room}/>
       ) : (
-        <div className='room'>
-          <input className='room-input' ref={roomInputRef} placeholder='search rooms'/>
-          <i onClick={() => setRoom(roomInputRef.current.value)} className='bx bx-search'></i>
+        <div style={{background: 'linear-gradient(to bottom, #36383f 3.2rem, #313338 3.2rem)'}} className='room w-full absolute h-full flex justify-center items-center'>
+          <input className='absolute w-[70%] p-[10px] top-[8px] outline-none rounded-[10px] bg-[#3f424a] text-[#bfc2c5] placeholder-[#757575] h-[35px] text-[15px]' ref={roomInputRef} placeholder='search rooms'/>
+          <i onClick={() => setRoom(roomInputRef.current.value)} className='bx bx-search absolute top-[12px] right-[15.5%] text-xl font-light text-[#bfc2c5]'></i>
         </div>
       )} 
-      
-      <div className='sign-out'>
-        <i onClick={signUserOut} className='bx bx-log-out'></i>
-      </div>
+      <i onClick={signUserOut} className='bx bx-log-out absolute right-[8px] top-[9px] text-[22px] text-[#bfc2c5]'></i>
     </>
   );
 }

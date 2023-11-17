@@ -35,13 +35,13 @@ export const Chat = (props) => {
   };
 
   return (
-    <div className="chat-app"> 
-      <h4>{room}</h4>
-      <div className="messages"> 
+    <div style={{background: 'linear-gradient(to bottom, #36383f 2.5rem, #313338 2.5rem)'}} className="w-full absolute h-full flex justify-center items-center"> 
+      <h4 className="absolute font-light top-[8px] text-[#bfc2c5]">{room}</h4>
+      <div style={{height: 'calc(100% - 6rem)'}} className="w-full overflow-y-auto p-[8px] rounded-2xl mt-[40px] absolute  top-0 left-0"> 
         {messages.map((message) => (
-          <div key={message.id} className="message">
-            <span className="user">{message.user}&nbsp;</span>
-            <span className="date text-xs"> {message.createdAt && message.createdAt.toDate() && (
+          <div key={message.id} className="text-[#dbdee1] font-light text-[14px] p-[5px] m-[8px] relative">
+            <span className="text-[#fff] font-medium">{message.user}&nbsp;</span>
+            <span className="text-[#9499a0] text-xs font-normal"> {message.createdAt && message.createdAt.toDate() && (
               <>
                 {message.createdAt.toDate().toLocaleDateString('en-US')} {' '}
                 {message.createdAt.toDate().toLocaleTimeString('en-US', {
@@ -50,13 +50,13 @@ export const Chat = (props) => {
                   hour12: true,
                 })}
               </>
-            )}<br></br></span>{message.text}
+            )}<br/></span>{message.text}
           </div>
         ))}
       </div>
-      <form onSubmit={handlSubmit}  className="new-message-form">
-        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575]" placeholder={"Message"+" "+(room)}/>
-        <button type="submit" className="send-button bx bxs-send"></button>
+      <form onSubmit={handlSubmit}  className="absolute bottom-[8px] w-full flex justify-center">
+        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[70%] p-[10px] bottom-0 rounded-[10px] bg-[#383a40] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message"+" "+(room)}/>
+        <i type="submit" className="send-button bx bxs-send right-[15.5%] text-xl bottom-[8px] text-[#bfc2c5] absolute"></i>
       </form> 
     </div>
   )

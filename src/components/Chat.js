@@ -54,9 +54,9 @@ export const Chat = (props) => {
           </div>
         ))}
       </div>
-      <form onSubmit={handlSubmit}  className="absolute bottom-[8px] w-full flex justify-center">
-        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[70%] p-[10px] bottom-0 rounded-[10px] bg-[#383a40] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message"+" "+(room)}/>
-        <i onClick={handlSubmit}type="submit" className="send-button bx bxs-send right-[15.5%] text-xl bottom-[8px] text-[#bfc2c5] absolute"></i>
+      <form onSubmit={handlSubmit}  className="absolute bottom-[8px] w-[70%] flex justify-center">
+        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[100%] p-[10px] bottom-0 rounded-[10px] bg-[#383a40] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message"+" "+(room)}/>
+        <i type="submit" className="send-button bx bxs-send right-[8px] text-xl bottom-[8px] text-[#bfc2c5] absolute"></i>
       </form> 
     </div>
   )

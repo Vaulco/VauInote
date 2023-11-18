@@ -35,7 +35,7 @@ export const Chat = (props) => {
   };
 
   return (
-    <div style={{background: 'linear-gradient(to bottom, #36383f 2.5rem, #313338 2.5rem)'}} className="w-full absolute h-full flex justify-center items-center"> 
+    <div style={{background: 'linear-gradient(to bottom, #36383f 2.5rem, #313338 2.5rem)'}} className="w-full absolute h-full flex justify-center items-center font-[poppins]"> 
       <h4 className="absolute font-light top-[8px] text-[#bfc2c5]">{room}</h4>
       <div style={{height: 'calc(100% - 6rem)'}} className="w-full overflow-y-auto p-[8px] rounded-2xl mt-[40px] absolute  top-0 left-0"> 
         {messages.map((message) => (

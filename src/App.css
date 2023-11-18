@@ -6,6 +6,7 @@
 
 * {
   font-family: 'Poppins', sans-serif;
+  
 }
 
 .messages::-webkit-scrollbar {
@@ -20,42 +21,4 @@
 .messages::-webkit-scrollbar-track {
   background-color: #2b2d31;
   border-radius: 2rem;
-}
-/*! Auth.js */
-
-.auth {
-  display: flex;
-  background: #1e1f22;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.auht-in {
-  height: 20rem;
-  width: 25rem;
-  background: #313338;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.blue {
-  position: absolute;
-  width: 5rem;
-  margin-bottom: 12rem;
-}
-
-.auth-btn {
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  width: 40%;
-  height: 35px;
-  position: relative;
-  font-weight: 600;
-  color: #bfc2c5;
-  background: #505155;
-  margin-top: 10rem;
 }

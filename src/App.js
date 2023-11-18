@@ -50,7 +50,7 @@ const App = () => {
       {inChat ? (
         <Chat room={room} />
       ) : (
-        <div style={{ background: 'linear-gradient(to bottom, #36383f 3.2rem, #313338 3.2rem)' }} className='room w-full absolute h-full flex justify-center items-center'>
+        <div style={{ background: 'linear-gradient(to bottom, #36383f 3.2rem, #313338 3.2rem)' }} className='room w-full absolute h-full flex justify-center items-center font-[Poppins]'>
           <form className='absolute w-[70%] h-[3.2rem] flex justify-center top-0'>
           <input className='absolute w-[100%] p-[10px] top-[8px] outline-none rounded-[10px] bg-[#3f424a] text-[#bfc2c5] placeholder-[#757575] h-[35px] text-[15px]' onKeyDown={handleKeyDown} ref={roomInputRef} placeholder='search rooms' />
           <i onClick={handleSearch} className='bx bx-search absolute top-[12px] right-[8px] text-xl font-light text-[#bfc2c5]'></i>

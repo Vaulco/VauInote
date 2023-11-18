@@ -4,11 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: 'Poppins', sans-serif;
-  
-}
-
 .messages::-webkit-scrollbar {
   width: 0.64vw;
 }

@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie';
 import { Chat } from "./components/Chat";
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase-config';
+import arrow from './components/assets/EpArrowLeftBold.svg'
 
 const cookies = new Cookies();
 
@@ -58,7 +59,7 @@ const App = () => {
         </div>
       )} 
       {inChat ? (
-        <i onClick={handleBackButtonClick} className='bx bxs-chevron-left absolute left-[8px] top-[9px] text-[25px] text-[#bfc2c5] hover:text-white duration-300'></i>
+        <img onClick={handleBackButtonClick}  src={arrow} className='absolute left-[12px] top-[12px]' alt=''/>
       ) : (
         <i onClick={signUserOut} className='bx bx-log-out absolute right-[8px] top-[15px] text-[22px] text-[#bfc2c5]'></i>
       )}

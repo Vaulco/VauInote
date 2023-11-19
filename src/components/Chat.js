@@ -131,7 +131,7 @@ export const Chat = (props) => {
                 ></i>
               </div>
             )}
-            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[30px] rounded-full absolute top-[10px] ml-[0.2rem]" />}
+            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[30px] rounded-full absolute top-[10px] ml-[0.23rem]" />}
             <span className="text-[#fff] font-medium ml-[2.6rem]">{message.user}&nbsp;</span>
             <span className="text-[#9499a0] text-xs font-normal">
               {message.createdAt && message.createdAt.toDate() && (

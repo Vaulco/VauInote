@@ -117,7 +117,7 @@ export const Chat = (props) => {
         {messages.map((message) => (
           <div
             key={message.id}
-            className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] p-[5px] mt-[5px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#18191b] hover:border-[#292a2c] duration-300 break-words"
+            className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] p-[5px] mt-[8px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#18191b] hover:border-[#292a2c] duration-300 break-words"
           >
             {auth.currentUser && auth.currentUser.displayName === message.user && (
               <div className="">

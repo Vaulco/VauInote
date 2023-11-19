@@ -17,3 +17,12 @@
   background-color: #2b2d31;
   border-radius: 2rem;
 }
+
+
+.message:hover .delete-icon {
+  opacity: 1;
+}
+
+.message:hover .edit-icon {
+  opacity: 1;
+}

@@ -26,3 +26,7 @@
 .message:hover .edit-icon {
   opacity: 1;
 }
+
+a:hover {
+  text-decoration: underline;
+}

@@ -85,6 +85,26 @@ export const Chat = (props) => {
     }
   };
 
+  const renderMessageText = (text) => {
+    const linkRegex = /(\b(https?|ftp):\/\/\S+)/gi;
+    const parts = text.split(linkRegex);
+
+    return parts.map((part, index) => {
+      if (part.match(linkRegex)) {
+        return (
+          <a style={{ color: '#60a7f5'}}  href={part} target="_blank" rel="noopener noreferrer">
+            {part}
+
+          </a>
+        );
+      } else if (part === 'http' || part === 'https') {
+        return null; // Hide the <span> element for "http" or "https"
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -131,22 +151,30 @@ export const Chat = (props) => {
                 ></i>
               </div>
             )}
-            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[30px] rounded-full absolute top-[10px] ml-[0.23rem]" />}
-            <span className="text-[#fff] font-medium ml-[2.6rem]">{message.user}&nbsp;</span>
+            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[36px] rounded-full absolute top-[8px] ml-[0.23rem] sm:ml-[0.7rem]" />}
+            <span className="text-[#fff] font-medium ml-[2.9rem] sm:ml-[4rem]">
+  {message.user.length > 17 ? message.user.split(' ')[0] : message.user}&nbsp;&nbsp;
+</span>
+
+
             <span className="text-[#9499a0] text-xs font-normal">
-              {message.createdAt && message.createdAt.toDate() && (
-                <>
-                  {message.createdAt.toDate().toLocaleDateString('en-US')} {' '}
-                  {message.createdAt.toDate().toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
-                  })}
-                </>
-              )}
-              <br />
-            </span>
-            <span className="ml-[2.6rem]">{message.text}</span>
+  {message.createdAt && message.createdAt.toDate() && (
+    <>
+      {message.createdAt.toDate().toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: 'numeric',
+        year: 'numeric',
+      })}{' '}
+      {message.createdAt.toDate().toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      })}
+    </>
+  )}
+  <br />
+</span>
+            <span className="ml-[2.9rem] sm:ml-[4rem]">{renderMessageText(message.text)}</span>
           </div>
         ))}
       </div>

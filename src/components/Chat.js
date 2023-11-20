@@ -68,10 +68,6 @@ export const Chat = (props) => {
     }
   };
 
-  const cancelEdit = () => {
-    setEditingMessage(null);
-    setNewMessage("");
-  };
 
   const saveEdit = async () => {
     try {
@@ -86,24 +82,28 @@ export const Chat = (props) => {
   };
 
   const renderMessageText = (text) => {
-    const linkRegex = /(\b(https?|ftp):\/\/\S+)/gi;
-    const parts = text.split(linkRegex);
+  if (!text) {
+    return null; // Handle the case where text is undefined or null
+  }
 
-    return parts.map((part, index) => {
-      if (part.match(linkRegex)) {
-        return (
-          <a style={{ color: '#60a7f5'}}  href={part} target="_blank" rel="noopener noreferrer">
-            {part}
+  const linkRegex = /(\b(https?|ftp):\/\/\S+)/gi;
+  const parts = text.split(linkRegex);
 
-          </a>
-        );
-      } else if (part === 'http' || part === 'https') {
-        return null; // Hide the <span> element for "http" or "https"
-      } else {
-        return <span key={index}>{part}</span>;
-      }
-    });
-  };
+  return parts.map((part, index) => {
+    if (part.match(linkRegex)) {
+      return (
+        <a key={index} style={{ color: '#60a7f5'}} href={part} target="_blank" rel="noopener noreferrer">
+          {part}
+        </a>
+      );
+    } else if (part === 'http' || part === 'https') {
+      return null; // Hide the <span> element for "http" or "https"
+    } else {
+      return <span key={index}>{part}</span>;
+    }
+  });
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

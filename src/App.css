@@ -30,3 +30,7 @@
 a:hover {
   text-decoration: underline;
 }
+
+h1 {
+  transform: scaleY(0.8);
+}

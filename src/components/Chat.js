@@ -152,8 +152,7 @@ export const Chat = (props) => {
         ))}
       </div>
       <form onSubmit={handleSubmit} className="absolute bottom-[8px] w-[70%] flex justify-center shadow-[-1px_-10px_20px_0px_rgba(25,26,28)] h-[3rem] rounded-[10px] bg-[#18191b] border-[#292a2c] border-[1px]">
-        <i className="bx bx-plus left-[8px] z-[1] text-[20px] bottom-[7px] text-[#bfc2c5] absolute bg-[#272727] p-[5px] rounded-md hover:text-white duration-300"></i>
-        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[calc(100%-40px)] left-0 p-[10px] bottom-0 rounded-[10px] bg-[#18191b] text-[#bfc2c5] h-[45px] text-[15px] outline-none indent-9" placeholder={"Message" + " " + (room)}/>
+        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[calc(100%-40px)] left-0 p-[10px] bottom-0 rounded-[10px] bg-[#18191b] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message" + " " + (room)}/>
         <i type="submit" onClick={handleSubmit} className="send-button bx bxs-send right-[8px] text-[20px] bottom-[7px] text-[#bfc2c5] absolute bg-[#272727] p-[5px] rounded-md hover:text-white duration-300"></i>
       </form>
     </div>

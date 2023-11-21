@@ -28,8 +28,8 @@ export const Auth = (props) => {
       <h1 className='font-semibold text-[#bfc2c5] absolute left-[3.5rem] top-4 text-[25px]'>Vaulnote</h1>
       <button className='w-[5rem] h-60px top-4 bg-[#1d1e1f] p-[5px] rounded-[8px] absolute right-4 font-semibold text-[#919495] duration-300 border-[2px] border-[#292a2c]' onClick={signInWithGoogle}>Login</button>
       </header>
-      <h2 className='absolute font-extrabold text-[27px] text-[#bfc2c5] top-[10rem] sm:text-[40px] md:text-[55px]'>Explore, and Connect...</h2>
-      <button className='absolute w-[13rem] h-[50px] bg-[#1d1e1f] top-[20rem] p-[5px] rounded-[12px] text-[18px]  font-semibold text-[#a3a7a8] duration-300 border-[4px] border-[#444549] hover:shadow-[0px_0px_50px_0px_rgba(25,26,28)]' onClick={signInWithGoogle}>Open in browser</button>
+      <h2 className='absolute font-extrabold text-[30px] w-4/6 flex justify-center text-center text-[#bfc2c5] top-[10rem] sm:text-[40px] md:text-[55px] md:w-full'>Explore and Connect!</h2>
+      <button className='absolute w-[13rem] h-[50px] bg-[#1d1e1f] top-[20rem] p-[5px] rounded-[12px] text-[18px]  font-semibold text-[#a3a7a8] duration-300 border-[4px] border-[#444549] hover:shadow-[0px_0px_50px_0px_rgba(25,26,28)] hover:scale-105' onClick={signInWithGoogle}>Open in browser</button>
     </section>
     </div>
   )

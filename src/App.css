@@ -21,10 +21,12 @@
 
 .message:hover .delete-icon {
   opacity: 1;
+  z-index: 5;
 }
 
 .message:hover .edit-icon {
   opacity: 1;
+  z-index: 6;
 }
 
 a:hover {

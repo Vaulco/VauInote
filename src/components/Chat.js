@@ -112,8 +112,8 @@ export const Chat = (props) => {
 
 
   return (
-    <div style={{ background: 'linear-gradient(to bottom, #191a1c 2.5rem, #141517 2.5rem)' }} className="w-full absolute h-full flex justify-center items-center font-[poppins]">
-      <header className=" w-full h-[2.5rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px]">
+    <div className="bg-[#141517] w-full absolute h-full flex justify-center items-center font-[poppins]">
+      <header className=" w-full h-[2.5rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px] bg-[#191a1c]">
         <h4 className="absolute font-normal text-[#bfc2c5]">{room}</h4>
       </header>
       <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0">
@@ -127,7 +127,7 @@ export const Chat = (props) => {
             )}
             {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[36px] rounded-full absolute top-[8px] ml-[0.23rem] sm:ml-[0.7rem]" />}
             <span className="text-[#fff] font-medium ml-[2.9rem] sm:ml-[4rem]">
-              {message.user.length > 17 ? message.user.split(' ')[0] : message.user}&nbsp;&nbsp;
+              {message.user.length > 16 ? message.user.split(' ')[0] : message.user}&nbsp;&nbsp;
             </span>
             <span className="text-[#9499a0] text-xs font-normal">
               {message.createdAt && message.createdAt.toDate() && (

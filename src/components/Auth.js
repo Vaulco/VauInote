@@ -23,7 +23,7 @@ export const Auth = (props) => {
   return ( 
     <div>
     <section className="bg-[blue] w-full relative h-[100vh] flex justify-center items-center bg-[url('./components/assets/layered-waves-haikei.svg')] bg-opacity-5 bg-no-repeat bg-cover font-[poppins] bg-center">
-      <header className='z-10 bg-opacity-90 fixed top-0 left-0 w-full h-[70px] bg-[#191a1c] flex items-center justify-center'>
+      <header className='z-10 bg-opacity-90 fixed top-0 left-0 w-full h-[60px] bg-[#191a1c] flex items-center justify-center'>
       <img className='absolute w-[30px] left-[1rem] top-5' src={logo} alt=''/>
       <h1 className='font-semibold text-[#bfc2c5] absolute left-[3.5rem] top-4 text-[25px]'>Vaulnote</h1>
       <button className='w-[5rem] h-60px top-4 bg-[#1d1e1f] p-[5px] rounded-[8px] absolute right-4 font-semibold text-[#919495] duration-300 border-[2px] border-[#292a2c]' onClick={signInWithGoogle}>Login</button>

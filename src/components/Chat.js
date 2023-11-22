@@ -1,3 +1,4 @@
+import menus from './assets/menu.svg';
 import { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy, deleteDoc, doc, updateDoc, } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
@@ -11,6 +12,8 @@ export const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [userAvatar, setUserAvatar] = useState(null);
   const messagesRef = collection(db, "messages");
+  const [menuActive, setMenuActive] = useState(false);
+  
 
   useEffect(() => {
     const queryMessages = query(
@@ -109,14 +112,17 @@ export const Chat = (props) => {
     setNewMessage("");
   };
 
-
+  const toggleMenu = () => {
+    setMenuActive(!menuActive);
+  };
 
   return (
-    <div className="bg-[#141517] w-full absolute h-full flex justify-center items-center font-[poppins]">
+    <div className={`bg-[#141517] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 ${menuActive ? ' active-box' : 'sm:w-[calc(100%-72px)]'}`}>
       <header className=" w-full h-[2.5rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px] bg-[#191a1c]">
+      <img onClick={toggleMenu} className='w-[25px] absolute left-2 z-10 md:hidden' src={menus} alt='' />
         <h4 className="absolute font-normal text-[#bfc2c5]">{room}</h4>
       </header>
-      <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0">
+      <div style={{ height: 'calc(100% - 6rem)' }} className={`messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300  ${menuActive ? ' active-menu-wrapper' : 'sm:opacity-100' }`}>
         {messages.map((message) => (
           <div key={message.id} className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] p-[5px] pt-2 pb-2 mt-[8px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#18191b] hover:border-[#292a2c] duration-300 break-words">
             {auth.currentUser && auth.currentUser.displayName === message.user && (

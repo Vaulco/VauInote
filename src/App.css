@@ -36,3 +36,32 @@ a:hover {
 h1 {
   transform: scaleY(0.8);
 }
+
+.active {
+  left: 40px;
+}
+
+.active-form {
+  left: -72px;
+}
+
+.active-header {
+  width: 100%;
+}
+
+.active-box {
+  width: calc(100% - 72px);
+}
+
+.active-menu-wrapper {
+  opacity: 0;
+}
+
+@media (min-width: 400px) {
+  .active-menu-wrapper {
+    opacity: 1;
+  }
+  .active-box {
+    width: 100%;
+  }
+}

@@ -57,6 +57,14 @@ h1 {
   opacity: 0;
 }
 
+.mt-\[5\.5px\]::-webkit-scrollbar {
+  display: none;
+}
+
+.active-save {
+  color: #959aa3;
+}
+
 @media (min-width: 400px) {
   .active-menu-wrapper {
     opacity: 1;

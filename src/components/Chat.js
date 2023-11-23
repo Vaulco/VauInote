@@ -1,9 +1,11 @@
+//! IMPORTS
 import { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy, deleteDoc, doc, updateDoc, } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import "../App.css";
-
+import CryptoJS from 'crypto-js';
+//! EXPORTS
 export const Chat = (props) => {
   const { room } = props;
   const [newMessage, setNewMessage] = useState("");
@@ -39,6 +41,8 @@ export const Chat = (props) => {
     };
   }, [room]);
 
+  //! MESSAGES FUNCTION
+    //! Delete Messages
   const handleDelete = async (messageId) => {
     try {
       await deleteDoc(doc(db, "messages", messageId));
@@ -46,7 +50,7 @@ export const Chat = (props) => {
       console.error("Error deleting message:", error);
     }
   };
-
+    //! Edit Messages
   const handleEdit = async (messageId) => {
     const messageToEdit = messages.find((message) => message.id === messageId);
 
@@ -55,7 +59,7 @@ export const Chat = (props) => {
       setNewMessage(messageToEdit.text);
     }
   };
-
+    //! Save Edited Messages
   const saveEdit = async () => {
     try {
       await updateDoc(doc(db, "messages", editingMessage), {
@@ -67,7 +71,7 @@ export const Chat = (props) => {
       console.error("Error updating message:", error);
     }
   };
-
+    //! Check If Message Has Link
   const renderMessageText = (text) => {
   if (!text) {
     return null;
@@ -89,7 +93,29 @@ export const Chat = (props) => {
       return <span key={index}>{part}</span>;
     }
   });};
-
+    //! Check If User Has The Email To Change Color
+  const renderMessageUser = (username, email) => {
+    const isDniemtsovEmailHash1 = '2669416d9fe79069c018c934b13bb986745b8170bba3dc1eba479d442153e36e';
+    const isDniemtsovEmailHash2 = 'acc8eaf72241bdb72a673e4e056ba3b189f10b044c56c3d035ab3b4e96d63bf6';
+    const hashedEnteredEmail = CryptoJS.SHA256(email).toString().toLowerCase();
+  
+    const styleColor = (() => {
+      if (hashedEnteredEmail === isDniemtsovEmailHash1) {
+        return '#6097d5';
+      } else if (hashedEnteredEmail === isDniemtsovEmailHash2) {
+        return '#EDAD2E';
+      } else {
+        return '#fff';
+      }
+    })();
+  
+    return (
+      <span className="text-[#fff] font-medium" style={{ color: styleColor }}>
+        {username.length > 16 ? username.split(' ')[0] : username}&nbsp;&nbsp;
+      </span>
+    );
+  };
+    //! Submit Messages
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -109,7 +135,7 @@ export const Chat = (props) => {
     setEditingMessage(null);
     setNewMessage("");
   };
-
+  //! HTML For Chat
   return (
     <div className="bg-[#222328] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 md:w-[calc(100%-72px)]">
       <header className=" w-full h-[2.6rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px] bg-[#323338c]">
@@ -126,7 +152,7 @@ export const Chat = (props) => {
             )}
             {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[36px] rounded-full absolute top-[10px] ml-[0.23rem] sm:ml-[0.7rem]" />}
             <span className="text-[#fff] font-medium ml-[2.9rem] sm:ml-[4rem]">
-              {message.user.length > 16 ? message.user.split(' ')[0] : message.user}&nbsp;&nbsp;
+              {renderMessageUser(message.user, message.email)}
             </span>
             <span className="text-[#9499a0] text-xs font-normal">
               {message.createdAt && message.createdAt.toDate() && (

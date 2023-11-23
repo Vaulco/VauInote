@@ -125,18 +125,18 @@ const App = () => {
         </header>
         <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-50 md:left-0 ${menuActive ? ' active-form' : ''}`}>
           <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[-4px] md:hidden'></i>
-          <div onClick={handleBackButtonClick} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer items-center'>
+          <div onClick={handleBackButtonClick} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer items-center'>
             <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
           </div>
           <div className='w-[25px] h-[2px] bg-[#bfc2c5] rounded-sm'></div>
           <div className='chat-container w-[49.5px] top-[76.2px] h-[calc(100%-8.77rem)] mt-[5.5px] absolute overflow-y-auto'>
             {savedRooms.map((savedRoom) => (
-              <div key={savedRoom} className='w-[49.5px] h-[47.5px] bg-[#212328] relative top-0 rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer items-center' onClick={() => handleOpenSavedRoom(savedRoom)}>
+              <div key={savedRoom} className='w-[49.5px] h-[47.5px] bg-[#212328] relative top-0 rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer items-center' onClick={() => handleOpenSavedRoom(savedRoom)}>
                 <i className='bx bxs-chat text-[25px] text-[#bfc2c5]'></i>
               </div>
             ))}
           </div>
-          <div onClick={signUserOut} className='w-[49.5px] h-[47.5px] bg-[#222328] absolute bottom-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer'>
+          <div onClick={signUserOut} className='w-[49.5px] h-[47.5px] bg-[#222328] absolute bottom-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
             <img className='w-[25px]' src={Logs} alt=''/>
           </div>
         </div>

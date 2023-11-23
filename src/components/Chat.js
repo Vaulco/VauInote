@@ -99,18 +99,30 @@ export const Chat = (props) => {
     const isDniemtsovEmailHash2 = 'acc8eaf72241bdb72a673e4e056ba3b189f10b044c56c3d035ab3b4e96d63bf6';
     const hashedEnteredEmail = CryptoJS.SHA256(email).toString().toLowerCase();
   
-    const styleColor = (() => {
+    const style = (() => {
       if (hashedEnteredEmail === isDniemtsovEmailHash1) {
-        return '#6097d5';
+        return {
+          color: '#6097d5',
+          fontWeight: 'bold', 
+          fontSize: '14px',
+          background: '-webkit-linear-gradient(#6097d5, #fff',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+          // Add more styling properties here
+        };
       } else if (hashedEnteredEmail === isDniemtsovEmailHash2) {
-        return '#EDAD2E';
+        return {
+          color: '#EDAD2E',
+        };
       } else {
-        return '#fff';
+        return {
+          color: '#fff',
+        };
       }
     })();
   
     return (
-      <span className="text-[#fff] font-medium" style={{ color: styleColor }}>
+      <span className="text-[#fff] font-medium" style={style}>
         {username.length > 16 ? username.split(' ')[0] : username}&nbsp;&nbsp;
       </span>
     );

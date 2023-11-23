@@ -21,7 +21,7 @@ export const Auth = (props) => {
   };
 
   return ( 
-    <div className="bg-[blue] w-full relative h-[100vh] flex justify-center items-center bg-[url('./components/assets/layered-waves-haikei.svg')] bg-opacity-5 bg-no-repeat bg-cover font-[poppins] bg-center">
+    <div className="bg-[#191a1c] w-full relative h-[100vh] flex justify-center items-center font-[poppins]">
       <header className='z-10 bg-opacity-90 fixed top-0 left-0 w-full h-[60px] bg-[#191a1c] flex items-center justify-center'>
       <img className='absolute w-[30px] left-[1rem] top-5' src={logo} alt=''/>
       <h1 className='font-semibold text-[#bfc2c5] absolute left-[3.5rem] top-4 text-[25px]'>Vaulnote</h1>

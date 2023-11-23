@@ -11,7 +11,6 @@ export const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [userAvatar, setUserAvatar] = useState(null);
   const messagesRef = collection(db, "messages");
-  const [menuActive, setMenuActive] = useState(false);
   
   useEffect(() => {
     const queryMessages = query(
@@ -118,14 +117,14 @@ export const Chat = (props) => {
       </header>
       <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300">
         {messages.map((message) => (
-          <div key={message.id} className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] p-[5px] pt-2 pb-2 mt-[8px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#26272b] hover:border-[transparent] duration-300 break-words">
+          <div key={message.id} className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[11px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words">
             {auth.currentUser && auth.currentUser.displayName === message.user && (
               <div className="">
-                <i onClick={() => handleDelete(message.id)} className="delete-icon bx bx-trash absolute right-[15px] top-[-10px] text-[#bfc2c5] text-[19px] font- cursor-pointer bg-[#26272b] p-[4px] pl-3 rounded-md border-[#1e1f22] border-[2px] duration-300 opacity-0 hover:text-white"></i>
-                <i onClick={() => handleEdit(message.id)} className="edit-icon bx bxs-pencil absolute right-[40px] top-[-10px] text-[19px] text-[#bfc2c5] cursor-pointer bg-[#26272b] p-[4px] rounded-md rounded-tr-none rounded-br-none border-l-[2px] border-b-[2px] border-t-[2px] border-[#1e1f22] duration-300 opacity-0 hover:text-white"></i>
+                <i onClick={() => handleDelete(message.id)} className="delete-icon bx bx-trash absolute right-[15px] top-[-10px] text-[#bfc2c5] text-[19px] font- cursor-pointer bg-[#292a30] p-[4px] pl-3 rounded-md border-[#222328] border-[2px] duration-300 opacity-0 hover:text-white"></i>
+                <i onClick={() => handleEdit(message.id)} className="edit-icon bx bxs-pencil absolute right-[40px] top-[-10px] text-[19px] text-[#bfc2c5] cursor-pointer bg-[#292a30] p-[4px] rounded-md rounded-tr-none rounded-br-none border-l-[2px] border-b-[2px] border-t-[2px] border-[#222328] duration-300 opacity-0 hover:text-white"></i>
               </div>
             )}
-            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[36px] rounded-full absolute top-[8px] ml-[0.23rem] sm:ml-[0.7rem]" />}
+            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[36px] rounded-full absolute top-[10px] ml-[0.23rem] sm:ml-[0.7rem]" />}
             <span className="text-[#fff] font-medium ml-[2.9rem] sm:ml-[4rem]">
               {message.user.length > 16 ? message.user.split(' ')[0] : message.user}&nbsp;&nbsp;
             </span>

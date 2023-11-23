@@ -1,8 +1,7 @@
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
-import { db } from './firebase-config'; // Make sure to import your Firestore configuration
-import Home from './components/assets/home.svg';
-import chat from './components/assets/chat.svg'
-import Logs from './components/assets/logout.svg';
+import { db } from './firebase-config';
+import bookmark from './components/assets/bookmark.svg';
+import Logs from './components/assets/settings.svg';
 import React, { useEffect, useState, useRef } from 'react';
 import { Auth } from "./components/Auth";
 import Cookies from 'universal-cookie';
@@ -121,24 +120,24 @@ const App = () => {
                 handleSearch();
               }
             }} className='absolute w-[calc(100%-34px)] left-0 p-[10px] top-0 outline-none rounded-[10px] bg-[#292a30] text-[#bfc2c5] placeholder-[#757575] h-[40px] text-[15px]' maxLength={32} ref={roomInputRef} placeholder='search rooms' />
-            <i onClick={handleSearch} className='bx bx-search absolute top-[4px] right-[8px] text-xl font-light text-[#bfc2c5]'></i>
+            <i onClick={handleSearch} className='bx bx-search absolute top-[6px] right-[10px] text-xl font-light text-[#bfc2c5]'></i>
           </form>
         </header>
         <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-50 md:left-0 ${menuActive ? ' active-form' : ''}`}>
           <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[-4px] md:hidden'></i>
-          <div onClick={handleBackButtonClick} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer'>
-            <img className='w-[25px]' src={Home} alt=''/>
+          <div onClick={handleBackButtonClick} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer items-center'>
+            <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
           </div>
-          <div className='w-[25px] h-[1px] bg-[#bfc2c5] rounded-sm'></div>
+          <div className='w-[25px] h-[2px] bg-[#bfc2c5] rounded-sm'></div>
           <div className='chat-container w-[49.5px] top-[76.2px] h-[calc(100%-8.77rem)] mt-[5.5px] absolute overflow-y-auto'>
             {savedRooms.map((savedRoom) => (
-              <div key={savedRoom} className='w-[49.5px] h-[47.5px] bg-[#212328] relative top-0 rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer' onClick={() => handleOpenSavedRoom(savedRoom)}>
-                <img className='w-[24px]' src={chat} alt='' />
+              <div key={savedRoom} className='w-[49.5px] h-[47.5px] bg-[#212328] relative top-0 rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer items-center' onClick={() => handleOpenSavedRoom(savedRoom)}>
+                <i className='bx bxs-chat text-[25px] text-[#bfc2c5]'></i>
               </div>
             ))}
           </div>
           <div onClick={signUserOut} className='w-[49.5px] h-[47.5px] bg-[#222328] absolute bottom-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#26272b] cursor-pointer'>
-            <img className='w-[22px]' src={Logs} alt=''/>
+            <img className='w-[25px]' src={Logs} alt=''/>
           </div>
         </div>
       </div>
@@ -148,7 +147,7 @@ const App = () => {
       )}
 
       {inChat && (
-          <i onClick={handleSaveRoom} className="bx bxs-save absolute top-2  right-2 text-[22px] text-[#bfc2c5] font-thin cursor-pointer hover:text-white duration-300"></i>
+          <img onClick={handleSaveRoom} className="absolute top-2  right-2 text-[22px] text-[#bfc2c5] font-thin cursor-pointer hover:text-white duration-300 w-[25px]" src={bookmark} alt=''/>
       )}
     </>
   );

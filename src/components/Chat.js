@@ -111,17 +111,12 @@ export const Chat = (props) => {
     setNewMessage("");
   };
 
-  const toggleMenu = () => {
-    setMenuActive(!menuActive);
-  };
-
   return (
-    <div className={`bg-[#1e1f22] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 ${menuActive ? ' active-box' : 'sm:w-[calc(100%-72px)]'}`}>
+    <div className="bg-[#222328] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 md:w-[calc(100%-72px)]">
       <header className=" w-full h-[2.6rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px] bg-[#323338c]">
-        <i onClick={toggleMenu} className='bx bx-menu w-[25px] absolute left-2 z-10 md:hidden'></i>
         <h4 className="absolute font-normal text-[#bfc2c5]">{room}</h4>
       </header>
-      <div style={{ height: 'calc(100% - 6rem)' }} className={`messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300  ${menuActive ? ' active-menu-wrapper' : 'sm:opacity-100' }`}>
+      <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300">
         {messages.map((message) => (
           <div key={message.id} className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] p-[5px] pt-2 pb-2 mt-[8px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#26272b] hover:border-[transparent] duration-300 break-words">
             {auth.currentUser && auth.currentUser.displayName === message.user && (
@@ -156,8 +151,8 @@ export const Chat = (props) => {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="absolute bottom-[8px] w-[70%] flex justify-center h-[45px] rounded-[10px] bg-[#26272b] ">
-        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[calc(100%-40px)] left-0 p-[10px] bottom-0 rounded-[10px] bg-[#26272b] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message" + " " + (room)}/>
+      <form onSubmit={handleSubmit} className="absolute bottom-[8px] w-[70%] flex justify-center h-[45px] rounded-[10px] bg-[#292a30] ">
+        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[calc(100%-40px)] left-0 p-[10px] bottom-0 rounded-[10px] bg-[#292a30] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message" + " " + (room)}/>
         <i type="submit" onClick={handleSubmit} className="send-button bx bxs-send right-[8px] text-[20px] bottom-[7px] text-[#bfc2c5] absolute bg-[transparent] p-[5px] rounded-md hover:text-white duration-300"></i>
       </form>
     </div>

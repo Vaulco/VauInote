@@ -151,7 +151,7 @@ const App = () => {
           </div>
         </div>
 
-        <div style={{background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)',}} className={` settings-box w-[340px] h-[397.5px] z-50 left-[11px] bottom-[69.5px] rounded-xl opacity-0 pointer-events-none absolute duration-300 ${showSettings ? 'show' : ''}`}>
+        <div style={{background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)',}} className={` settings-box w-[calc(100%-22px)] h-[397.5px] z-50 left-[11px] bottom-[69.5px] rounded-xl opacity-0 pointer-events-none absolute duration-300 sm:w-[340px] ${showSettings ? 'show' : ''}`}>
           <img onClick={signUserOut} className='m-3 w-[22px] absolute right-0 bottom-0 cursor-pointer' src={settings} alt=''/>
           <img className='w-[5.5rem] rounded-full m-5 mt-4 border-[6px] border-[#292a30]' src={Logs} alt=''/>
         </div>

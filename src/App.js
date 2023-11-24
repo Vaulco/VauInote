@@ -7,7 +7,6 @@ import { Auth } from "./components/Auth";
 import Cookies from 'universal-cookie';
 import { Chat } from "./components/Chat";
 import { signOut, getAuth, onAuthStateChanged, } from 'firebase/auth';
-import { logDOM } from '@testing-library/react';
 
 const cookies = new Cookies();
 
@@ -22,8 +21,6 @@ const App = () => {
   const auth = getAuth();
   const Logs = auth.currentUser ? auth.currentUser.photoURL : '';
   const [showSettings, setShowSettings] = useState(false);
-
-
 
   useEffect(() => {
     const loadSavedRooms = async () => {

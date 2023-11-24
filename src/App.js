@@ -1,12 +1,13 @@
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
 import { db } from './firebase-config';
 import bookmark from './components/assets/bookmark.svg';
-import Logs from './components/assets/settings.svg';
+import settings from './components/assets/settings.svg'
 import React, { useEffect, useState, useRef } from 'react';
 import { Auth } from "./components/Auth";
 import Cookies from 'universal-cookie';
 import { Chat } from "./components/Chat";
 import { signOut, getAuth, onAuthStateChanged, } from 'firebase/auth';
+import { logDOM } from '@testing-library/react';
 
 const cookies = new Cookies();
 
@@ -19,6 +20,10 @@ const App = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [savedRooms, setSavedRooms] = useState([]);
   const auth = getAuth();
+  const Logs = auth.currentUser ? auth.currentUser.photoURL : '';
+  const [showSettings, setShowSettings] = useState(false);
+
+
 
   useEffect(() => {
     const loadSavedRooms = async () => {
@@ -98,7 +103,12 @@ const App = () => {
 
   const toggleMenu = () => {
     setMenuActive(!menuActive);
+    setShowSettings(false);
   };
+
+  const toggleSettings = () => {
+  setShowSettings(!showSettings);
+};
 
   if (!isAuth) {
     return (
@@ -123,7 +133,7 @@ const App = () => {
             <i onClick={handleSearch} className='bx bx-search absolute top-[6px] right-[10px] text-xl font-light text-[#bfc2c5]'></i>
           </form>
         </header>
-        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-50 md:left-0 ${menuActive ? ' active-form' : ''}`}>
+        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-40 md:left-0 ${menuActive ? ' active-form' : ''}`}>
           <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[-4px] md:hidden'></i>
           <div onClick={handleBackButtonClick} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer items-center'>
             <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
@@ -136,9 +146,14 @@ const App = () => {
               </div>
             ))}
           </div>
-          <div onClick={signUserOut} className='w-[49.5px] h-[47.5px] bg-[#222328] absolute bottom-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
-            <img className='w-[25px]' src={Logs} alt=''/>
+          <div onClick={toggleSettings} className='w-[49.5px] h-[47.5px] p-[7px] bg-[#222328] absolute bottom-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
+            {Logs && <img className='rounded-full' src={Logs} alt='' />}
           </div>
+        </div>
+
+        <div style={{background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)',}} className={` settings-box w-[340px] h-[397.5px] z-50 left-[11px] bottom-[69.5px] rounded-xl opacity-0 pointer-events-none absolute duration-300 ${showSettings ? 'show' : ''}`}>
+          <img onClick={signUserOut} className='m-3 w-[22px] absolute right-0 bottom-0 cursor-pointer' src={settings} alt=''/>
+          <img className='w-[5.5rem] rounded-full m-5 mt-4 border-[6px] border-[#292a30]' src={Logs} alt=''/>
         </div>
       </div>
 
@@ -149,6 +164,7 @@ const App = () => {
       {inChat && (
           <img onClick={handleSaveRoom} className="absolute top-2  right-2 text-[22px] text-[#bfc2c5] font-thin cursor-pointer hover:text-white duration-300 w-[25px]" src={bookmark} alt=''/>
       )}
+
     </>
   );
 }

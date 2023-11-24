@@ -65,6 +65,22 @@ h1 {
   color: #959aa3;
 }
 
+
+.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.close-icon {
+  cursor: pointer;
+  margin-top: 10px;
+  color: #bfc2c5;
+}
+
+.close-icon:hover {
+  color: #ffffff;
+}
+
 @media (min-width: 400px) {
   .active-menu-wrapper {
     opacity: 1;

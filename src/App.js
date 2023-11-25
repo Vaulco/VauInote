@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, where, query, doc, updateDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebase-config';
 import bookmark from './components/assets/bookmark.svg';
 import settings from './components/assets/settings.svg'
@@ -6,7 +6,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Auth } from "./components/Auth";
 import Cookies from 'universal-cookie';
 import { Chat } from "./components/Chat";
-import { signOut, getAuth, onAuthStateChanged, } from 'firebase/auth';
+import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const cookies = new Cookies();
 
@@ -21,8 +21,27 @@ const App = () => {
   const auth = getAuth();
   const Logs = auth.currentUser ? auth.currentUser.photoURL : '';
   const [showSettings, setShowSettings] = useState(false);
+  const [bio, setBio] = useState('');
+  const [isEditingBio, setIsEditingBio] = useState(false);
+  const displayName = auth.currentUser ? auth.currentUser.displayName : '';
+  const email = auth.currentUser ? auth.currentUser.email : '';
 
   useEffect(() => {
+    const loadUserBio = async () => {
+      if (auth.currentUser) {
+        try {
+          const userDocRef = doc(db, 'users', auth.currentUser.uid);
+          const userDocSnapshot = await getDoc(userDocRef);
+    
+          setBio((prevBio) => {
+            return userDocSnapshot.exists() ? userDocSnapshot.data().bio : '';
+          });
+        } catch (error) {
+          console.error('Error loading user bio: ', error);
+        }
+      }
+    };
+
     const loadSavedRooms = async () => {
       if (auth.currentUser) {
         try {
@@ -49,6 +68,8 @@ const App = () => {
         setSavedRooms([]);
       }
     });
+
+    loadUserBio();
 
     return () => unsubscribe();
   }, [auth.currentUser]);
@@ -108,32 +129,58 @@ const App = () => {
   }
 
   const toggleSettings = () => {
-  setShowSettings(!showSettings);
-};
+    setShowSettings(!showSettings);
+  };
 
-const handleTouchStart = (e) => {
-  touchStartY.current = e.touches[0].clientY;
-};
+  const toggleBioEditing = () => {
+    setIsEditingBio(!isEditingBio);
+  };
 
-const handleTouchEnd = (e) => {
-  if (touchStartY.current && e.changedTouches.length) {
-    const touchEndY = e.changedTouches[0].clientY;
-    const deltaY = touchEndY - touchStartY.current;
-
-    // If the swipe distance is greater than a threshold, close the settings box
-    if (deltaY > 50) {
-      setShowSettings(false);
+  const saveBio = async () => {
+    try {
+      const userDocRef = doc(db, 'users', auth.currentUser.uid);
+  
+      const userDocSnapshot = await getDoc(userDocRef);
+  
+      if (userDocSnapshot.exists()) {
+        await updateDoc(userDocRef, {
+          bio: bio,
+        });
+      } else {
+        await setDoc(userDocRef, {
+          uid: auth.currentUser.uid,
+          bio: bio,
+        });
+      }
+  
+      setIsEditingBio(false);
+    } catch (error) {
+      console.error('Error saving bio: ', error);
     }
+  };
 
-    touchStartY.current = null;
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartY.current && e.changedTouches.length) {
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaY = touchEndY - touchStartY.current;
+
+      if (deltaY > 50) {
+        setShowSettings(false);
+      }
+
+      touchStartY.current = null;
+    }
+  };
+
+  const closeSettings = () => {
+    setShowSettings(false);
   }
-};
 
-const closeSettings = () => {
-  setShowSettings(false);
-}
-
-const touchStartY = useRef(null);
+  const touchStartY = useRef(null);
 
   if (!isAuth) {
     return (
@@ -177,21 +224,46 @@ const touchStartY = useRef(null);
           </div>
         </div>
 
-        <div style={{background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)',}} className={` settings-box w-full h-[397.5px] -bottom-[397.5px] z-50 rounded-t-xl pointer-events-none absolute duration-300 border-l-2 border-r-2 border-[#292830] sm:w-[340px] flex flex-col items-center ${showSettings ? 'show' : ''}`}>
+        <div style={{ background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)', }} className={` settings-box w-full h-[397.5px] -bottom-[397.5px] z-50 rounded-t-xl pointer-events-none absolute duration-300 border-l-2 border-r-2 border-[#292830] sm:w-[340px] flex flex-col items-center ${showSettings ? 'show' : ''}`}>
           <div className='w-1/12 absolute top-0 bg-[#292a30] h-[3px] m-2 rounded-sm'></div>
-          <img onClick={(() => { signUserOut(); closeSettings(); })} className='m-3 w-[22px] absolute right-0 bottom-0 cursor-pointer' src={settings} alt=''/>
-          <img className='w-[5.5rem] rounded-full left-0 absolute m-5 mt-4 border-[6px] border-[#292a30]' src={Logs} alt=''/>
+          <img onClick={(() => { signUserOut(); closeSettings(); })} className='m-3 w-[22px] absolute right-0 bottom-0 cursor-pointer' src={settings} alt='' />
+          <img className='w-[5.5rem] rounded-full left-0 m-5 mt-4 border-[6px] absolute border-[#292a30]' src={Logs} alt='' />
+          <div className='w-[94%] rounded-xl h-[240px] bg-[#1e1f23] mt-28 p-3'>
+            <span className='text-[#bfc2c5] font-medium relative'>{displayName}<br /></span>
+            <span className='text-[#bfc2c5] text-[15px] font-thin relative'>{email}</span>
+            {isEditingBio ? (
+              <textarea
+                value={bio}
+                onChange={(e) => setBio((prevBio) => e.target.value)}
+                className='w-[100%] h-[calc(100%-50px)] resize-none bg-[#1e1f23] text-[14px] font-normal text-[#bfc2c5]  border-none outline-none overflow-hidden'
+                placeholder='Type your bio...'
+              />
+            ) : (
+              <div className='text-[#bfc2c5] text-[14px] font-normal relative break-words'>{bio}</div>
+            )}
+
+            <div className='top-0'>
+              {isEditingBio ? (
+                <div className='absolute bottom-3 left-4 w-[20rem] inline-block'>
+                  <h4 className='text-[#bfc2c5] inline-block text-[12px]'>esacape to</h4><span onClick={toggleBioEditing} className='cursor-pointer text-[#3498db] text-[12px] w-[10rem] hover:underline'> Cancel </span>
+                  <h4 className='text-[12px] inline-block text-[#bfc2c5]'> • enter to</h4>&nbsp;<span onClick={saveBio} className='cursor-pointer text-[#3498db] text-[12px] w-[10rem] hover:underline'>Save</span>
+                </div>
+              ) : (
+                <i onClick={toggleBioEditing} className='bx bxs-pencil cursor-pointer text-[20px]  text-[#464747] hover:text-[#5a5b5b] duration-300 absolute right-2 top-2'></i>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <div onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd} onClick={(() => { closeMenu(); closeSettings(); })}>
-      {showChat && (
-        <Chat room={room} />
-      )}
+        {showChat && (
+          <Chat room={room} />
+        )}
       </div>
 
-      {inChat  && (
-          <img onClick={handleSaveRoom} className="absolute top-2  right-2 text-[22px] text-[#bfc2c5] font-thin cursor-pointer hover:text-white duration-300 w-[25px]" src={bookmark} alt=''/>
+      {inChat && (
+        <img onClick={handleSaveRoom} className="absolute top-2  right-2 text-[22px] text-[#bfc2c5] font-thin cursor-pointer hover:text-white duration-300 w-[25px]" src={bookmark} alt='' />
       )}
 
     </>

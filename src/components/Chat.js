@@ -1,5 +1,7 @@
 //! IMPORTS
+import line from './assets/line.svg'
 import { useEffect, useState } from "react";
+import reply from './assets/reply.svg';
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy, deleteDoc, doc, updateDoc, } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
@@ -13,6 +15,7 @@ export const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [userAvatar, setUserAvatar] = useState(null);
   const messagesRef = collection(db, "messages");
+  const [replyToMessage, setReplyToMessage] = useState(null);
   
   useEffect(() => {
     const queryMessages = query(
@@ -128,70 +131,101 @@ export const Chat = (props) => {
     );
   };
     //! Submit Messages
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (editingMessage !== null) {
-      saveEdit();
-    } else {
-      await addDoc(messagesRef, {
-        text: newMessage,
-        createdAt: serverTimestamp(),
-        user: auth.currentUser.displayName,
-        room,
-        userAvatar: auth.currentUser.photoURL, // Added this line
-        email: auth.currentUser.email,
-      });
-    }
-
-    setEditingMessage(null);
-    setNewMessage("");
-  };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      if (editingMessage !== null) {
+        saveEdit();
+      } else {
+        const messageData = {
+          text: newMessage,
+          createdAt: serverTimestamp(),
+          user: auth.currentUser.displayName,
+          room,
+          userAvatar: auth.currentUser.photoURL,
+          email: auth.currentUser.email,
+        };
+    
+        if (replyToMessage) {
+          // If replying, add information about the message being replied to
+          messageData.replyTo = {
+            user: replyToMessage.user,
+            text: replyToMessage.text,
+          };
+    
+          // Clear the reply state after replying
+          setReplyToMessage(null);
+        }
+    
+        await addDoc(messagesRef, messageData);
+      }
+    
+      setEditingMessage(null);
+      setNewMessage("");
+    };
   //! HTML For Chat
   return (
     <div className="bg-[#222328] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 md:w-[calc(100%-72px)]">
       <header className=" w-full h-[2.6rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px] bg-[#323338c]">
         <h4 className="absolute font-normal text-[#bfc2c5]">{room}</h4>
       </header>
-      <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300">
+      <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300 z-30">
         {messages.map((message) => (
-          <div key={message.id} className="message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[11px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words">
+          <div key={message.id} className={`message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[11px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words ${replyToMessage && replyToMessage.id === message.id ? 'reply-message' : ''}`}>
+            {message.replyTo && (
+              <div className="reply-indicator text-[12px] pb-0 ml-[3.9rem]">
+                <img src={line} className='w-[30px] absolute left-8 top-4'/>
+                <span className="reply-user top-[-10px] text-[#9f9f9f] font-medium">@{message.replyTo.user}</span>&nbsp;{message.replyTo.text.slice(0, 20)}...
+              </div>
+            )}
             {auth.currentUser && auth.currentUser.displayName === message.user && (
               <div className="">
                 <i onClick={() => handleDelete(message.id)} className="delete-icon bx bx-trash absolute right-[15px] top-[-10px] text-[#bfc2c5] text-[19px] font- cursor-pointer bg-[#292a30] p-[4px] pl-3 rounded-md border-[#222328] border-[2px] duration-300 opacity-0 hover:text-white"></i>
                 <i onClick={() => handleEdit(message.id)} className="edit-icon bx bxs-pencil absolute right-[40px] top-[-10px] text-[19px] text-[#bfc2c5] cursor-pointer bg-[#292a30] p-[4px] rounded-md rounded-tr-none rounded-br-none border-l-[2px] border-b-[2px] border-t-[2px] border-[#222328] duration-300 opacity-0 hover:text-white"></i>
               </div>
             )}
-            {message.userAvatar && <img src={message.userAvatar} alt="User Avatar" className="avatar w-[36px] rounded-full absolute top-[10px] ml-[0.23rem] sm:ml-[0.7rem]" />}
-            <span className="text-[#fff] font-medium ml-[2.9rem] sm:ml-[4rem]">
-              {renderMessageUser(message.user, message.email)}
-            </span>
-            <span className="text-[#9499a0] text-xs font-normal">
-              {message.createdAt && message.createdAt.toDate() && (
-                <>
-                  {message.createdAt.toDate().toLocaleDateString('en-US', {
-                    month: '2-digit',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}{' '}
-                  {message.createdAt.toDate().toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
-                  })}
-                </>
-              )}<br/>
-            </span>
-            <span className="ml-[2.9rem] sm:ml-[4rem]">
-              {renderMessageText(message.text)}
-            </span>
-          </div>
-        ))}
+            {(!auth.currentUser || auth.currentUser.displayName !== message.user) && (
+            <img src={reply} className="reply-icon w-[30px] rounded-md border-2 border-[#222328] opacity-0 z-10 duration-300 right-[15px] top-[-10px] absolute bg-[#292a30] p-[4px]" alt="" onClick={() => {
+            setReplyToMessage(message);
+          }}/>
+        )}
+        {message.userAvatar && (
+          <img src={message.userAvatar} alt="User Avatar" className={`avatar w-[36px] rounded-full absolute top-[10px] ml-[0.23rem] sm:ml-[0.7rem] ${ message.replyTo ? 'reply-avatar' : '' }`}/>
+        )}
+        <span className="text-[#fff] font-medium ml-[2.9rem] sm:ml-[4rem]">
+          {renderMessageUser(message.user, message.email)}
+        </span>
+        <span className="text-[#9499a0] text-xs font-normal">
+          {message.createdAt && message.createdAt.toDate() && (
+            <>
+              {message.createdAt.toDate().toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: 'numeric',
+                year: 'numeric',
+              })}{' '}
+              {message.createdAt.toDate().toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+              })}
+            </>
+          )}<br/>
+        </span>
+        <span className="ml-[2.9rem] sm:ml-[4rem]">
+          {renderMessageText(message.text)}
+        </span>
       </div>
-      <form onSubmit={handleSubmit} className="absolute bottom-[11px] w-[70%] flex justify-center h-[45px] rounded-[10px] bg-[#292a30] ">
-        <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[calc(100%-40px)] left-0 p-[10px] bottom-0 rounded-[10px] bg-[#292a30] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message" + " " + (room)}/>
-        <i type="submit" onClick={handleSubmit} className="send-button bx bxs-send right-[8px] text-[20px] bottom-[7px] text-[#bfc2c5] absolute bg-[transparent] p-[5px] rounded-md hover:text-white duration-300"></i>
-      </form>
+    ))}
     </div>
+      {replyToMessage && (
+    <div className="reply-info text-[#757575] p-1 z-40 w-[70%] h-[2rem] text-[13px] flex items-center pl-2 bottom-[55px] absolute bg-[#1e1f22] rounded-md">
+      Replying to&nbsp;<span className="text-[#a3a5a8]">{replyToMessage.user}</span><i className="bx bx-x absolute right-2 text-[20px] cursor-pointer" onClick={() => setReplyToMessage(null)}></i>
+    </div>
+  )}
+  <form onSubmit={handleSubmit} className="absolute bottom-[11px] w-[70%] flex justify-center h-[45px] rounded-[10px] bg-[#292a30] z-50">
+    <input onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="new-message-input placeholder-[#757575] absolute w-[calc(100%-40px)] left-0 p-[10px] bottom-0 rounded-[10px] bg-[#292a30] text-[#bfc2c5] h-[45px] text-[15px] outline-none" placeholder={"Message" + " " + (room)}/>
+    <i type="submit" onClick={handleSubmit} className="send-button bx bxs-send right-[8px] text-[20px] bottom-[7px] text-[#bfc2c5] absolute bg-[transparent] p-[5px] rounded-md hover:text-white duration-300"></i>
+  </form>
+  </div>
   );
 };

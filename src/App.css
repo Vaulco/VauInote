@@ -29,6 +29,15 @@
   z-index: 6;
 }
 
+.message:hover .reply-icon {
+  opacity: 1;
+}
+
+.reply-avatar {
+  top: 28px;
+}
+
+
 a:hover {
   text-decoration: underline;
 }

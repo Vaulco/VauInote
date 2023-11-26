@@ -206,7 +206,7 @@ const App = () => {
             <i onClick={handleSearch} className='bx bx-search absolute top-[6px] right-[10px] text-xl font-light text-[#bfc2c5]'></i>
           </form>
         </header>
-        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-40 md:left-[-72px] ${menuActive ? ' active-form' : ''}`}>
+        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-[55] md:left-[-72px] ${menuActive ? ' active-form' : ''}`}>
           <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[-4px] md:hidden'></i>
           <div onClick={(() => { handleBackButtonClick(); closeSettings(); closeMenu(); })} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer items-center'>
             <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
@@ -224,7 +224,7 @@ const App = () => {
           </div>
         </div>
 
-        <div style={{ background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)', }} className={` settings-box w-full h-[397.5px] -bottom-[397.5px] z-50 rounded-t-xl pointer-events-none absolute duration-300 border-l-2 border-r-2 border-[#292830] sm:w-[340px] flex flex-col items-center ${showSettings ? 'show' : ''}`}>
+        <div style={{ background: 'linear-gradient(to bottom, #bfc2c5 4rem, #292a30 4rem)', }} className={` settings-box w-full h-[397.5px] -bottom-[397.5px] z-[60] rounded-t-xl pointer-events-none absolute duration-300 border-l-2 border-r-2 border-[#292830] sm:w-[340px] flex flex-col items-center ${showSettings ? 'show' : ''}`}>
           <div className='w-1/12 absolute top-0 bg-[#292a30] h-[3px] m-2 rounded-sm'></div>
           <img onClick={(() => { signUserOut(); closeSettings(); })} className='m-3 w-[22px] absolute right-0 bottom-0 cursor-pointer' src={settings} alt='' />
           <img className='w-[5.5rem] rounded-full left-0 m-5 mt-4 border-[6px] absolute border-[#292a30]' src={Logs} alt='' />
@@ -237,9 +237,10 @@ const App = () => {
                 onChange={(e) => setBio((prevBio) => e.target.value)}
                 className='w-[100%] h-[calc(100%-50px)] resize-none bg-[#1e1f23] text-[14px] font-normal text-[#bfc2c5]  border-none outline-none overflow-hidden'
                 placeholder='Type your bio...'
+                maxLength={200}
               />
             ) : (
-              <div className='text-[#bfc2c5] text-[14px] font-normal relative break-words'>{bio}</div>
+              <div className='text-[#bfc2c5] text-[14px] font-normal relative break-words overflow-hidden'>{bio}</div>
             )}
 
             <div className='top-0'>

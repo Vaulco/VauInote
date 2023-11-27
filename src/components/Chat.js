@@ -7,6 +7,7 @@ import { auth, db } from "../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import "../App.css";
 import CryptoJS from 'crypto-js';
+import BadWordsFilter from 'bad-words';
 //! EXPORTS
 export const Chat = (props) => {
   const { room } = props;
@@ -16,6 +17,7 @@ export const Chat = (props) => {
   const [userAvatar, setUserAvatar] = useState(null);
   const messagesRef = collection(db, "messages");
   const [replyToMessage, setReplyToMessage] = useState(null);
+  const filter = new BadWordsFilter();
   
   useEffect(() => {
     const queryMessages = query(
@@ -137,6 +139,13 @@ export const Chat = (props) => {
       if (editingMessage !== null) {
         saveEdit();
       } else {
+        const messageContainsBadWords = filter.isProfane(newMessage);
+    
+        if (messageContainsBadWords) {
+          // Message contains bad words, do not submit
+          return false;
+        }
+    
         const messageData = {
           text: newMessage,
           createdAt: serverTimestamp(),
@@ -147,13 +156,11 @@ export const Chat = (props) => {
         };
     
         if (replyToMessage) {
-          // If replying, add information about the message being replied to
           messageData.replyTo = {
             user: replyToMessage.user,
             text: replyToMessage.text,
           };
     
-          // Clear the reply state after replying
           setReplyToMessage(null);
         }
     
@@ -161,8 +168,9 @@ export const Chat = (props) => {
       }
     
       setEditingMessage(null);
-      setNewMessage("");
+      setNewMessage(""); // Clear the input after successfully submitting the message
     };
+    
   //! HTML For Chat
   return (
     <div className="bg-[#222328] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 md:w-[calc(100%-72px)]">

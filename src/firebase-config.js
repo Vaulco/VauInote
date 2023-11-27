@@ -8,13 +8,13 @@ import { getFirestore } from 'firebase/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAS6dZ-GYg1Upj8v2hOpYQmgb4J5Qwgzmc",
-  authDomain: "vaulnote-com.firebaseapp.com",
-  projectId: "vaulnote-com",
-  storageBucket: "vaulnote-com.appspot.com",
-  messagingSenderId: "451368071601",
-  appId: "1:451368071601:web:d9feecb573b02aeb450d90",
-  measurementId: "G-54J85EHPY2"
+  apiKey: "AIzaSyAeHseMqJ9JDLR1eSg6a4vqxC4KX7Wnc00",
+  authDomain: "vaulnote-194b1.firebaseapp.com",
+  projectId: "vaulnote-194b1",
+  storageBucket: "vaulnote-194b1.appspot.com",
+  messagingSenderId: "590664782284",
+  appId: "1:590664782284:web:7a0eaa5086dad66b270d69",
+  measurementId: "G-S06MG9CR77"
 };
 
 // Initialize Firebase

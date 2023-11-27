@@ -7,6 +7,7 @@ import { Auth } from "./components/Auth";
 import Cookies from 'universal-cookie';
 import { Chat } from "./components/Chat";
 import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
+import BadWordsFilter from 'bad-words';
 
 const cookies = new Cookies();
 
@@ -25,6 +26,7 @@ const App = () => {
   const [isEditingBio, setIsEditingBio] = useState(false);
   const displayName = auth.currentUser ? auth.currentUser.displayName : '';
   const email = auth.currentUser ? auth.currentUser.email : '';
+  const filter = new BadWordsFilter();
 
   useEffect(() => {
     const loadUserBio = async () => {
@@ -99,11 +101,16 @@ const App = () => {
   };
 
   const handleSearch = () => {
-    setRoom(roomInputRef.current.value);
-    setInChat(true);
-    setShowChat(true);
+    const inputValue = roomInputRef.current.value;
+  
+    if (filter.isProfane(inputValue)) {
+      return(false)
+    } else {
+      setRoom(inputValue);
+      setInChat(true);
+      setShowChat(true);
+    }
   };
-
   const signUserOut = async () => {
     await signOut(auth);
     cookies.remove("auth-token");

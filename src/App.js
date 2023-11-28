@@ -213,20 +213,20 @@ const App = () => {
             <i onClick={handleSearch} className='bx bx-search absolute top-[6px] right-[10px] text-xl font-light text-[#bfc2c5]'></i>
           </form>
         </header>
-        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] p-[11px] duration-300 flex flex-col items-center z-[55] md:left-[-72px] ${menuActive ? ' active-form' : ''}`}>
+        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] duration-300 flex flex-col items-center z-[55] md:left-[-72px] ${menuActive ? ' active-form' : ''}`}>
           <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[-4px] md:hidden'></i>
-          <div onClick={(() => { handleBackButtonClick(); closeSettings(); closeMenu(); })} className='w-full h-[47.5px] bg-[#212328] relative top-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer items-center'>
+          <div onClick={(() => { handleBackButtonClick(); closeSettings(); closeMenu(); })} className='w-[50px] h-[50px] mb-[11px] mt-[11px] bg-[#212328] absolute rounded-xl flex justify-center items-center hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
             <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
           </div>
-          <div className='w-[25px] h-[2px] bg-[#bfc2c5] rounded-sm'></div>
-          <div className='chat-container w-[49.5px] top-[76.2px] h-[calc(100%-8.77rem)] mt-[5.5px] absolute overflow-y-auto'>
+          <div className='w-[25px] h-[3px] bg-[#bfc2c5] rounded-sm absolute top-[72px]'></div>
+          <div className='w-[50px] top-[86px] h-[calc(100%-144px)] absolute overflow-y-auto'>
             {savedRooms.map((savedRoom) => (
-              <div key={savedRoom} className='w-[49.5px] h-[47.5px] bg-[#212328] relative top-0 rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer items-center' onClick={(() => { handleOpenSavedRoom(savedRoom); closeMenu(); closeSettings(); })}>
+              <div key={savedRoom} className='w-[50px] h-[50px] bg-[#212328] relative top-0 rounded-xl flex justify-center items-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer' onClick={(() => { handleOpenSavedRoom(savedRoom); closeMenu(); closeSettings(); })}>
                 <i className='bx bxs-chat text-[25px] text-[#bfc2c5]'></i>
               </div>
             ))}
           </div>
-          <div onClick={toggleSettings} className='w-[49.5px] h-[47.5px] p-[7px] bg-[#222328] absolute bottom-0  rounded-xl flex justify-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
+          <div onClick={toggleSettings} className='w-[50px] h-[50px] bg-[#222328] absolute bottom-[11px] p-[7px] rounded-xl flex justify-center hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
             {Logs && <img className='rounded-full' src={Logs} alt='' />}
           </div>
         </div>

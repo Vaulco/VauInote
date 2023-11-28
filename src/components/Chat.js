@@ -8,6 +8,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import "../App.css";
 import CryptoJS from 'crypto-js';
 import BadWordsFilter from 'bad-words';
+import messageSentSound from './assets/discord_ping_sound_effect.mp3'; // Replace with the path to your audio file
+
 //! EXPORTS
 export const Chat = (props) => {
   const { room } = props;
@@ -18,6 +20,9 @@ export const Chat = (props) => {
   const messagesRef = collection(db, "messages");
   const [replyToMessage, setReplyToMessage] = useState(null);
   const filter = new BadWordsFilter();
+  let lastMessageTimestamp = null;
+
+
   
   useEffect(() => {
     const queryMessages = query(
@@ -25,26 +30,34 @@ export const Chat = (props) => {
       where("room", "==", room),
       orderBy("createdAt")
     );
-
+  
     const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
       let messages = [];
       snapshot.forEach((doc) => {
         messages.push({ ...doc.data(), id: doc.id });
       });
       setMessages(messages);
+  
+      const latestMessage = messages[messages.length - 1];
+      if (latestMessage && latestMessage.createdAt && latestMessage.user !== auth.currentUser.displayName && (!lastMessageTimestamp || latestMessage.createdAt.toMillis() > lastMessageTimestamp.toMillis())) {
+        const audio = new Audio(messageSentSound);
+        audio.play();
+        lastMessageTimestamp = latestMessage.createdAt;
+      }
     });
-
+  
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserAvatar(user.photoURL);
       }
     });
-
+  
     return () => {
       unsubscribe();
       unsubscribeAuth();
     };
   }, [room]);
+  
 
   //! MESSAGES FUNCTION
     //! Delete Messages
@@ -165,12 +178,14 @@ export const Chat = (props) => {
         }
     
         await addDoc(messagesRef, messageData);
+    
+        // Set the timestamp of the last sent message
+        lastMessageTimestamp = messageData.createdAt;
       }
     
       setEditingMessage(null);
       setNewMessage(""); // Clear the input after successfully submitting the message
     };
-    
   //! HTML For Chat
   return (
     <div className="bg-[#222328] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 md:w-[calc(100%-72px)]">

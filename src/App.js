@@ -214,7 +214,7 @@ const App = () => {
           </form>
         </header>
         <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] duration-300 flex flex-col items-center z-[55] md:left-[-72px] ${menuActive ? ' active-form' : ''}`}>
-          <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[-4px] md:hidden'></i>
+          <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[7px] md:hidden'></i>
           <div onClick={(() => { handleBackButtonClick(); closeSettings(); closeMenu(); })} className='w-[50px] h-[50px] mb-[11px] mt-[11px] bg-[#212328] absolute rounded-xl flex justify-center items-center hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
             <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
           </div>

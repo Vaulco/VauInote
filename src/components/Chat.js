@@ -189,7 +189,7 @@ export const Chat = (props) => {
   //! HTML For Chat
   return (
     <div className="bg-[#222328] w-full absolute h-full flex justify-center items-center font-[poppins] right-0 duration-300 md:w-[calc(100%-72px)]">
-      <header className=" w-full h-[2.6rem] absolute top-0 flex justify-center items-center border-[#292a2c] border-b-[1px] bg-[#323338c]">
+      <header className=" w-full h-[2.6rem] absolute top-0 flex justify-center items-center bg-[#292a30]">
         <h4 className="absolute font-normal text-[#bfc2c5]">{room}</h4>
       </header>
       <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300 z-30">
@@ -197,7 +197,7 @@ export const Chat = (props) => {
           <div key={message.id} className={`message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[11px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words ${replyToMessage && replyToMessage.id === message.id ? 'reply-message' : ''}`}>
             {message.replyTo && (
               <div className="reply-indicator text-[12px] pb-0 ml-[3.9rem]">
-                <img src={line} className='w-[30px] absolute left-8 top-4'/>
+                <img src={line} a className='w-[30px] absolute left-8 top-4'/>
                 <span className="reply-user top-[-10px] text-[#9f9f9f] font-medium">@{message.replyTo.user}</span>&nbsp;{message.replyTo.text.slice(0, 20)}...
               </div>
             )}

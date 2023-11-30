@@ -213,13 +213,13 @@ const App = () => {
             <i onClick={handleSearch} className='bx bx-search absolute top-[6px] right-[10px] text-xl font-light text-[#bfc2c5]'></i>
           </form>
         </header>
-        <div className={`w-[72px] h-full absolute bg-[#191a1d] left-[-72px] duration-300 flex flex-col items-center z-[55] md:left-[-72px] ${menuActive ? ' active-form' : ''}`}>
+        <div className={`w-[72px] menu-bar h-full absolute bg-[#191a1d] rounded-r-xl  left-[-72px] duration-300 flex flex-col items-center z-[55] md:left-[-72px] md:rounded-none ${menuActive ? ' active-form' : ''}`}>
           <i onClick={toggleMenu} className='bx bx-menu text-[#bfc2c5] text-[26px] font-thin absolute z-10 ml-28 mt-[7px] md:hidden'></i>
           <div onClick={(() => { handleBackButtonClick(); closeSettings(); closeMenu(); })} className='w-[50px] h-[50px] mb-[11px] mt-[11px] bg-[#212328] absolute rounded-xl flex justify-center items-center hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer'>
             <i className='bx bxs-home text-[25px] text-[#bfc2c5]' ></i>
           </div>
-          <div className='w-[25px] h-[3px] bg-[#bfc2c5] rounded-sm absolute top-[72px]'></div>
-          <div className='w-[50px] top-[86px] h-[calc(100%-144px)] absolute overflow-y-auto'>
+          <div className='w-[25px] h-[3px] bg-[#292a30] rounded-sm absolute top-[72px]'></div>
+          <div className='w-[50px] menu-bar top-[86px] h-[calc(100%-144px)] absolute overflow-y-auto'>
             {savedRooms.map((savedRoom) => (
               <div key={savedRoom} className='w-[50px] h-[50px] bg-[#212328] relative top-0 rounded-xl flex justify-center items-center mb-[11px] hover:scale-95 duration-300 hover:bg-[#292a30] cursor-pointer' onClick={(() => { handleOpenSavedRoom(savedRoom); closeMenu(); closeSettings(); })}>
                 <i className='bx bxs-chat text-[25px] text-[#bfc2c5]'></i>

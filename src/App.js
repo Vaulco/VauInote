@@ -8,7 +8,6 @@ import Cookies from 'universal-cookie';
 import { Chat } from "./components/Chat";
 import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 import BadWordsFilter from 'bad-words';
-
 const cookies = new Cookies();
 
 const App = () => {

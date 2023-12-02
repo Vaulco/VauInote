@@ -194,7 +194,7 @@ export const Chat = (props) => {
       </header>
       <div style={{ height: 'calc(100% - 6rem)' }} className="messages w-full overflow-y-auto p-[0] rounded-[5px] mt-[40px] absolute top-0 left-0 duration-300 z-30">
         {messages.map((message) => (
-          <div key={message.id} className={`message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[11px] relative border-[transparent] border-t-[2px] border-b-[2px] rounded-[5px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words ${replyToMessage && replyToMessage.id === message.id ? 'reply-message' : ''}`}>
+          <div key={message.id} className={`message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[8px] relative border-[transparent] border-t-[2px] border-b-[2px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words ${replyToMessage && replyToMessage.id === message.id ? 'reply-message' : ''}`}>
             {message.replyTo && (
               <div className="reply-indicator text-[12px] pb-0 ml-[3.9rem]">
                 <img src={line} a className='w-[30px] absolute left-8 top-4'/>

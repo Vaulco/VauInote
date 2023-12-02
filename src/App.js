@@ -10,6 +10,7 @@ import { signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 import BadWordsFilter from 'bad-words';
 const cookies = new Cookies();
 
+
 const App = () => {
   const [isAuth, setIsAuth] = useState(cookies.get("auth-token"));
   const [room, setRoom] = useState(null);
@@ -26,8 +27,17 @@ const App = () => {
   const displayName = auth.currentUser ? auth.currentUser.displayName : '';
   const email = auth.currentUser ? auth.currentUser.email : '';
   const filter = new BadWordsFilter();
+  const savedRoom = window.localStorage.getItem('currentRoom');
 
   useEffect(() => {
+    
+
+
+    if (savedRoom) {
+      setRoom(savedRoom);
+      setInChat(true);
+      setShowChat(true);
+    }
     const loadUserBio = async () => {
       if (auth.currentUser) {
         try {
@@ -97,6 +107,8 @@ const App = () => {
     setRoom(savedRoom);
     setInChat(true);
     setShowChat(true);
+    window.localStorage.setItem('currentRoom', savedRoom);
+
   };
 
   const handleSearch = () => {
@@ -108,6 +120,8 @@ const App = () => {
       setRoom(inputValue);
       setInChat(true);
       setShowChat(true);
+      window.localStorage.setItem('currentRoom', savedRoom);
+
     }
   };
   const signUserOut = async () => {

@@ -121,7 +121,6 @@ export const Chat = (props) => {
       if (hashedEnteredEmail === isDniemtsovEmailHash1) {
         return {
           color: '#6097d5',
-          fontWeight: 'bold', 
           fontSize: '14px',
           background: '-webkit-linear-gradient(#6097d5, #fff',
         WebkitBackgroundClip: 'text',
@@ -197,8 +196,8 @@ export const Chat = (props) => {
           <div key={message.id} className={`message text-[#dbdee1] bg-[transparent] font-light text-[14px] pl-[5px] pr-[5px] pt-2 pb-2 mt-[8px] relative border-[transparent] border-t-[2px] border-b-[2px] hover:bg-[#292a30] hover:border-[transparent] duration-300 break-words ${replyToMessage && replyToMessage.id === message.id ? 'reply-message' : ''}`}>
             {message.replyTo && (
               <div className="reply-indicator text-[12px] pb-0 ml-[3.9rem]">
-                <img src={line} a className='w-[30px] absolute left-8 top-4'/>
-                <span className="reply-user top-[-10px] text-[#9f9f9f] font-medium">@{message.replyTo.user}</span>&nbsp;{message.replyTo.text.slice(0, 20)}...
+                <img src={line} a className='w-[35px] absolute md:left-7 left-5 top-0'/>
+                <span className="reply-user md:left-[2px] left-[-10px] relative text-[#9f9f9f] font-medium">{message.replyTo.user}</span>&nbsp;<span className='font-normal md:left-[2px] left-[-10px] relative '>{message.replyTo.text.slice(0, 20)}</span>
               </div>
             )}
             {auth.currentUser && auth.currentUser.displayName === message.user && (

@@ -29,6 +29,14 @@
   z-index: 6;
 }
 
+.boxes {
+  background: url(https://pages.convertkit.com/assets/simple/bg.png) no-repeat;
+   background-size: 100%;
+   background-position: center;
+}
+
+
+
 .message:hover .reply-icon {
   opacity: 1;
 }
